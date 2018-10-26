@@ -5,6 +5,6 @@ GeoWat想让这个项目开源、轻量、有趣。希望你也可以利用它�
 hhvygutyrty
 
 前端：
-React：iamGeoWat  
+React + Ant Design：iamGeoWat  
 后端：
 Flask：Dormitabnia
