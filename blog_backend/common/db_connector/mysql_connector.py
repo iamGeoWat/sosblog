@@ -1,7 +1,20 @@
-from ..config import get_config
-import pymysql
+from flask import g, current_app
+from flask_sqlalchemy import SQLAlchemy
 
-config = get_config()
 
-# 建立数据库链接
-db = pymysql.connect(config.HOST_NAME, config.USERNAME, config.PASSWORD, config.DATABASE)
+def get_db():
+    if 'db' not in g:
+        g.db = SQLAlchemy(current_app)
+
+    return g.db
+
+
+def close_db():
+    db = g.pop('db', None)
+
+    if db is not None:
+        db.close()
+
+
+if __name__ == '__main__':
+    db_ob = get_db()

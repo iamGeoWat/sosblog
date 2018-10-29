@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 pymysql = "*"
 flask = "*"
+flask-sqlalchemy = "*"
 
 [dev-packages]
 
