@@ -1,4 +1,5 @@
 from blog_backend.author import create_app, db
+import datetime
 
 
 class User(db.Model):
@@ -12,6 +13,13 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+    def __init__(self, username, password, nickname):
+        self.username = username
+        self.password = password
+        self.nickname = nickname
+        self.register_time = datetime.datetime.now()
+        self.is_admin = False
 
 
 tags = db.Table('article_tag',
