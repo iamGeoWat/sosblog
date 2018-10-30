@@ -10,8 +10,9 @@ React + Ant Design：iamGeoWat
 Flask：Dormitabnia  
 
 后端开发：  
-1.有更新后使用```pipenv sync```进行包依赖的同步  
-2.打开python shell使用以下命令初始化数据库
+1. 有更新后使用```pipenv sync```进行包依赖的同步
+2. 在common.config.development中配置数据库信息
+3. 打开python shell使用以下命令初始化数据库
 ```
 from blog_backend.author import create_app, db
 with create_app().test_request_context():
