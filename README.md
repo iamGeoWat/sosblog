@@ -7,4 +7,13 @@ CSUJZZZ说hhvygutyrty
 前端：
 React + Ant Design：iamGeoWat  
 后端：
-Flask：Dormitabnia
+Flask：Dormitabnia  
+
+后端开发：  
+1.有更新后使用```pipenv sync```进行包依赖的同步  
+2.打开python shell使用以下命令初始化数据库
+```
+from blog_backend.author import create_app, db
+with create_app().test_request_context():
+    db.create_all()
+```

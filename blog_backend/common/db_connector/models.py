@@ -49,6 +49,15 @@ class Category(db.Model):
         return '<category %r>' % self.cname
 
 
+class Comment(db.Model):
+    __table_name__ = 'comment'
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.Integer, db.ForeignKey('user.id'))
+    article = db.Column(db.Integer, db.ForeignKey('article.id'))
+    content = db.Column(db.String(200), nullable=False)
+    create_time = db.Column(db.DateTime)
+
+
 if __name__ == '__main__':
     app = create_app()
     with app.test_request_context():
