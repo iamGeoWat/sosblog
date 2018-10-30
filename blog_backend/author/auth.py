@@ -1,27 +1,40 @@
 import functools
 from flask import Blueprint, request, session, jsonify, g
-from ..common.db_connector.mysql_connector import get_db, close_db
 from werkzeug.security import generate_password_hash, check_password_hash
+from ..common.db_connector.models import User
 
 auth_blueprint = Blueprint('auth', __name__)
 
 
-@auth_blueprint.route('/register', methods=['post'])
-def register():
+@auth_blueprint.route('/login', methods=['post'])
+def login():
     """
-    用户注册
+    用户登录
 
     参数：
     {
         'username': 'USERNAME',
-        'password': '123',
-        'nickname': 'NICKNAME'
+        'password': '123'
     }
     """
     username = request.form['username']
     password = request.form['password']
 
-    db = get_db()
+    user = User.query.filter_by(username=username)
+
+    if not user:
+        return jsonify({'success': False,
+                        'msg': 'Username not exist!'})
+
+    if not check_password_hash(user.password, password):
+        return jsonify({'success': False,
+                        'msg': 'Incorrect password!'})
+
+    session.clear()
+    session['user_id'] = user.id
+
+    return jsonify({'success': True,
+                    'msg': 'Login success'})
 
 
 @auth_blueprint.route('/logout')
@@ -34,16 +47,14 @@ def logout():
                     'msg': 'Logout success'})
 
 
-# @auth_blueprint.before_app_request()
-# def load_logged_in_user():
-#     user_id = session.get('user_id')
-#
-#     if user_id is None:
-#         g.user = None
-#     else:
-#         g.user = get_db().execute(
-#             'SELECT * FROM user WHERE id = ?', (user_id,)
-#         ).fetchone()
+@auth_blueprint.before_app_request()
+def load_logged_in_user():
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = User.query.get(user_id)
 
 
 def login_required(view):
