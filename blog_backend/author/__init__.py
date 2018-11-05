@@ -1,8 +1,9 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
 
-from flask import Flask
+from flask import Flask, Blueprint
 from ..common.config import get_config
+from flask_restful import Api
 
 db = SQLAlchemy()
 
@@ -15,8 +16,16 @@ def create_app():
 
     db.init_app(app)
 
-    # 注册blueprint
-    from . import auth
-    app.register_blueprint(auth.auth_blueprint)
+    api_blueprint = Blueprint('api', __name__)
+
+    api = Api(api_blueprint)
+
+    from blog_backend.author.account import Account
+    api.add_resource(Account, '/account', '/account/<int:uid>')
+
+    # 注册蓝图
+    app.register_blueprint(api_blueprint)
+    from .auth import auth_blueprint
+    app.register_blueprint(auth_blueprint)
 
     return app
