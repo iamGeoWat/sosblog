@@ -14,6 +14,9 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
+    def __str__(self):
+        return self.username
+
     def __init__(self, username, password, nickname):
         self.username = username
         self.password = password
@@ -38,12 +41,31 @@ class Article(db.Model):
     tags = db.relationship('Tag', secondary=tags,
                            backref=db.backref('articles', lazy='dynamic'))
 
+    def __str__(self):
+        return self.title
+
+    def __init__(self, title, author, content, category, *tags):  # TODO *tags?
+        self.title = title
+        self.author = author
+        self.content = content
+        self.category = category
+        self.tags = tags
+
+    def __repr__(self):
+        return '<Article %r>' % self.title
+
 
 class Tag(db.Model):
     __table_name__ = 'tag'
     id = db.Column(db.Integer, primary_key=True)
     tag_name = db.Column(db.String(10), nullable=False)
     description = db.Column(db.String(20))
+
+    def __str__(self):
+        return self.tag_name
+
+    def __repr__(self):
+        return '<Tag %r>' % self.tag_name
 
 
 class Category(db.Model):
@@ -56,6 +78,9 @@ class Category(db.Model):
     def __repr__(self):
         return '<category %r>' % self.cname
 
+    def __str__(self):
+        return self.cname
+
 
 class Comment(db.Model):
     __table_name__ = 'comment'
@@ -64,6 +89,9 @@ class Comment(db.Model):
     article = db.Column(db.Integer, db.ForeignKey('article.id'))
     content = db.Column(db.String(200), nullable=False)
     create_time = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return '<comment for article %r>' % self.article
 
 
 if __name__ == '__main__':

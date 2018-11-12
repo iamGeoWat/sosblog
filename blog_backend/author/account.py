@@ -9,15 +9,12 @@ user_fields = {
     'password': fields.String,
     'nickname': fields.String,
     'register_time': fields.DateTime,
-    'is_admin': fields.Boolean
 }
 
 parser = reqparse.RequestParser()
 parser.add_argument('username', type=str)
 parser.add_argument('password', type=str)
 parser.add_argument('nickname', type=str)
-
-args = parser.parse_args()
 
 
 class Account(Resource):
@@ -26,6 +23,8 @@ class Account(Resource):
         return marshal(q_user, user_fields)
 
     def put(self):
+        args = parser.parse_args()
+
         q_user = User.query.filter(username=args['username'])
         q_user.password = generate_password_hash(args['password'])
         q_user.nickname = args['nickname']

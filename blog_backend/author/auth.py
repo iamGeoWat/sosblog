@@ -9,8 +9,6 @@ parser = reqparse.RequestParser()
 parser.add_argument('username', type=str)
 parser.add_argument('password', type=str)
 
-args = parser.parse_args()
-
 auth_blueprint = Blueprint('auth', __name__)
 
 
@@ -25,6 +23,8 @@ def login():
         'password': '123'
     }
     """
+    args = parser.parse_args()
+
     username = args['username']
     password = args['password']
 
@@ -57,6 +57,8 @@ def register():
         'nickname': 'NICKNAME'
     }
     """
+    args = parser.parse_args()
+
     n_username = args['username']
     if User.query.filter_by(username=n_username):
         return jsonify({'success': False,
@@ -83,6 +85,8 @@ def check_username_existence():
         'username': 'USERNAME_TO_CHECK'
     }
     """
+    args = parser.parse_args()
+
     n_username = args['username']
     if User.query.filter_by(username=n_username):
         return jsonify({'isExisted': True})
@@ -112,6 +116,8 @@ def validate_password():
         'password': 'PASSWORD'
     }
     """
+    args = parser.parse_args()
+
     username = args['username']
     password = args['password']
 
@@ -128,7 +134,7 @@ def validate_password():
     return {'is_correct': True}
 
 
-# @auth_blueprint.before_app_request()
+@auth_blueprint.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
 

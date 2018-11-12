@@ -21,7 +21,9 @@ def create_app():
     api = Api(api_blueprint)
 
     from blog_backend.author.account import Account
+    from blog_backend.author.article import Article
     api.add_resource(Account, '/account', '/account/<int:uid>')
+    api.add_resource(Article, '/article', '/article/<int:aid>')
 
     # 注册蓝图
     app.register_blueprint(api_blueprint)
