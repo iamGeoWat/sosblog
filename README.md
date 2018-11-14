@@ -8,6 +8,8 @@ CSUJZZZ说hhvygutyrty
 React + Ant Design：iamGeoWat  
 后端：
 Flask：Dormitabnia  
+临时前端：  
+VueJS + ElementUI
 
 后端开发：  
 1. 有更新后使用```pipenv sync```进行包依赖的同步
