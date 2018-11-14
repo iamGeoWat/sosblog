@@ -2,6 +2,7 @@ from flask_restful import Resource, marshal, fields, reqparse
 from ..common.db_connector.models import User
 from werkzeug.security import generate_password_hash
 from . import db
+from .util import login_required
 
 user_fields = {
     'id': fields.Integer,
@@ -22,6 +23,7 @@ class Account(Resource):
         q_user = User.query.get(uid)
         return marshal(q_user, user_fields)
 
+    @login_required
     def put(self):
         args = parser.parse_args()
 

@@ -44,12 +44,12 @@ class Article(db.Model):
     def __str__(self):
         return self.title
 
-    def __init__(self, title, author, content, category, *tags):  # TODO *tags?
+    def __init__(self, title, author, content, category):  # TODO *tags?
         self.title = title
         self.author = author
         self.content = content
         self.category = category
-        self.tags = tags
+        self.create_time = datetime.datetime.now()
 
     def __repr__(self):
         return '<Article %r>' % self.title

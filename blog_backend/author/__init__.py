@@ -22,12 +22,19 @@ def create_app():
 
     from blog_backend.author.account import Account
     from blog_backend.author.article import Article
+    from blog_backend.author.category import Category
+    from blog_backend.author.comment import Comment
     api.add_resource(Account, '/account', '/account/<int:uid>')
     api.add_resource(Article, '/article', '/article/<int:aid>')
+    api.add_resource(Category, '/category', '/category/<int:cid>')
+    api.add_resource(Comment, '/comment')
+    # api.add_resource(ArticleList, '/articles')
 
     # 注册蓝图
     app.register_blueprint(api_blueprint)
     from .auth import auth_blueprint
+    from .article import articles_blueprint
     app.register_blueprint(auth_blueprint)
+    app.register_blueprint(articles_blueprint)
 
     return app

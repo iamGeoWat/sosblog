@@ -40,6 +40,7 @@ def login():
 
     session.clear()
     session['user_id'] = user.id
+    g.user = user
 
     return jsonify({'success': True,
                     'msg': 'Login success'})
@@ -75,7 +76,7 @@ def register():
                     'msg': 'Register success!'})
 
 
-@auth_blueprint.route('/check_username_existence', methods=['post'])
+@auth_blueprint.route('/check_username_existence', methods=['get'])
 def check_username_existence():
     """
     检查用户名是否存在
@@ -105,7 +106,7 @@ def logout():
                     'msg': 'Logout success'})
 
 
-@auth_blueprint.route('/validate_password')
+@auth_blueprint.route('/validate_password', methods=['post'])
 def validate_password():
     """
     验证密码是否正确
@@ -131,7 +132,7 @@ def validate_password():
         return jsonify({'is_correct': False,
                         'msg': 'Incorrect password!'})
 
-    return {'is_correct': True}
+    return {'is_correct': True, 'msg': 'Correct password!'}
 
 
 @auth_blueprint.before_app_request

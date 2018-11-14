@@ -1,5 +1,5 @@
 import functools
-from flask import jsonify
+from flask import jsonify, g
 
 
 def login_required(view):
