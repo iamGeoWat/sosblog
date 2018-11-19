@@ -102,8 +102,7 @@ def logout():
     用户登出
     """
     session.clear()
-    return jsonify({'success': True,
-                    'msg': 'Logout success'})
+    return jsonify({'success': True, 'msg': 'Logout success'})
 
 
 @auth_blueprint.route('/validate_password', methods=['post'])
@@ -132,7 +131,7 @@ def validate_password():
         return jsonify({'is_correct': False,
                         'msg': 'Incorrect password!'})
 
-    return {'is_correct': True, 'msg': 'Correct password!'}
+    return jsonify({'is_correct': True, 'msg': 'Correct password!'})
 
 
 @auth_blueprint.before_app_request
